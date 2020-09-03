@@ -1,0 +1,97 @@
+﻿@using Microsoft.AspNetCore.Identity;
+@inject SignInManager<IdentityUser> signInManager;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - health_declaration</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+</head>
+<body style="background-color:#eee">
+    <header>
+        <div>
+            <nav style="background-color:#0a6dd4">
+
+                <div class="container">
+                    <a href="#">
+                        <img src="~/img/header.png" alt="Logo" style="width:100%; height:100%;margin-bottom:-40px;">
+                    </a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+
+                </div>
+            </nav>
+        </div>
+
+    </header>
+    <h2 style="margin-top: 40px;text-align:center">Tờ khai y tế/Vietnam Health Declaration</h2>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer style="background-color:#0a6dd4" class="border-top footer text-muted">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6">
+                    <p style="margin-top:0px">
+                        <a style="color:white" href="https://www.youtube.com/watch?v=uuBsNteM_60&feature=youtu.be">Video hướng dẫn Khai báo y tế nhập cảnh</a>
+                    </p>
+                    <p style="margin-top:10px">
+                        <a style="color:white" href="https://www.youtube.com/watch?v=uIK04d8hrHs&feature=youtu.be">Video hướng dẫn Khai báo y tế nội địa</a>
+                    </p>
+                    <p style="margin-top:10px">
+                        <a style="color:white" href="https://www.youtube.com/watch?v=36pOpha1Dts&feature=youtu.be">Video hướng dẫn Khai báo y tế tại điểm kiểm soát dịch</a>
+                    </p>
+                </div>
+                <div class="col-sm-6 ml-auto">
+                    <p style="color:white;margin-top:10px;margin-left:314px">Phần dành cho cán bộ quản lý</p>
+                    @if (signInManager.IsSignedIn(User))
+                    {
+                        <p style="margin-top:0px">
+                            <a asp-controller="Manager" asp-action="Index" style="color:white">Phần dành cho cán bộ quản lý</a>
+                        </p>
+
+                    }
+                    @if (signInManager.IsSignedIn(User))
+                    {
+
+                        <p>
+                            <form asp-controller="Account" asp-action="Logout" method="post">
+                                <button type="submit" class="btn btn-link text-light">
+                                    Chào bạn @User.Identity.Name
+                                </button>
+                            </form>
+                        </p>
+                    }
+                    else
+                    {
+                        <p style="margin-top:10px;margin-left:457px">
+                            <a style="color:white" asp-controller="Account" asp-action="Login">Đăng nhập</a>
+
+                        </p>
+                    }
+
+                    <p style="margin-top:10px;margin-left:391px">
+                        <a style="color:white" href="https://drive.google.com/drive/folders/1NuduP5pvhJ8qyrmHsfmwH5JFrr6tMsHa">Hướng dẫn sử dụng</a>
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @RenderSection("Scripts", required: false)
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+</body>
+</html>

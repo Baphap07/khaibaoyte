@@ -1,0 +1,50 @@
+﻿@model IEnumerable<Medical_Declaration>
+@{
+    ViewBag.Title = "Managerment";
+}
+
+<h2>@ViewBag.Title</h2>
+<table class="table table-bordered table-hover mt2">
+    <thead class="thead-dark">
+        <tr>
+            <th>Id</th>
+            <th>User Name</th>
+            <th>GateId</th>
+            <th>Phone</th>
+            <th>Address</th>
+            <th>Symptom</th>
+            <th>Description</th>
+            <th>Dob</th>
+            <th>Gender</th>
+            <th>Start_Place</th>
+            <th>Destination</th>
+            <th>Departure_Day</th>
+            <th>Entry_Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Any())
+        {
+            foreach (var md in Model)
+            {
+        <tr>
+            <td>@md.Id</td>
+            <td>@md.UserName</td>
+            <td>@md.GateId</td>
+            <td>@md.Phone</td>
+            <td>@md.Address</td>
+            <td>@md.SymptonId</td>
+            <td>@md.Description</td>
+            <td>@md.Dob</td>
+            <td>@md.Gender</td>
+            <td>@md.start_place</td>
+            <td>@md.destination</td>
+            <td>@md.Departure_day</td>
+            <td>
+                @md.Entry_date
+            </td>
+        </tr>
+            }
+        }
+    </tbody>
+</table>

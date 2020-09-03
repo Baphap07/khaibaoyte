@@ -1,0 +1,782 @@
+﻿@model  HomeCreateViewModel
+@{
+    ViewData["Title"] = "Home Page";
+    var gates = ViewBag.gates as List<Gate>;
+    var provinces = ViewBag.provinces as List<Province>;
+    var districts = ViewBag.districts as List<District>;
+    var wards = ViewBag.wards as List<Ward>;
+    var date = DateTime.Now.ToString("dd. MM. yyyy");
+}
+    <form   asp-controller="Home" asp-action="Index" method="post" class="mt-2">
+        <div style="background-color:white;margin-top: 40px;padding-top: 20px;margin-bottom:150px" class="container">
+
+
+            <h5 style="margin-bottom: 20px;text-align:center;">TỜ KHAI Y TẾ ĐỐI VỚI NGƯỜI NHẬP CẢNH</h5>
+
+            <h8 style="margin-bottom: 20px;text-align:center">ĐÂY LÀ TÀI LIỆU QUAN TRỌNG, THÔNG TIN CỦA ANH/CHỊ SẼ GIÚP CƠ QUAN Y TẾ LIÊN LẠC KHI CẦN THIẾT ĐỂ PHÒNG CHỐNG DỊCH BỆNH TRUYỀN NHIỄM</h8>
+
+            <p style="color:red;margin-top: 25px;text-align:center">Khuyến cáo: Khai báo thông tin sai là vi phạm pháp luật Việt Nam và có thể xử lý hình sự</p>
+            <div class="row">
+                <div class="col-sm-3">
+                    <div>
+                        <label>
+                            Cửa khẩu
+                            <em style="color:red">(*)</em>
+                        </label>
+                    </div>
+
+                </div>
+                <div style="margin-bottom: 20px" class="col-sm-3">
+                    <div class="form-ground">
+
+                        <select class="form-control" asp-for="GateId">
+
+                            <option value="0">-Chọn-</option>
+                            @foreach (var gate in gates)
+                            {
+                                if (gate != null)
+                                {
+                                    <option value="@gate.GateId">@gate.GateName</option>
+                                }
+                            }
+
+                        </select>
+                        <span asp-validation-for="GateId" class="text-danger"></span>
+                    </div>
+
+
+                </div>
+            </div>
+            <div style="margin-bottom: 20px" class="row">
+                <div class="col-sm-3">
+                    <div>
+                        <label>
+                            Họ tên (ghi chữ IN HOA)
+                            <em style="color:red">(*)</em>
+                        </label>
+                    </div>
+
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-ground">
+
+                        <input asp-for="UserName" class="form-control" type="text" style='text-transform:uppercase' />
+                        <span asp-validation-for="UserName" class="text-danger"></span>
+                    </div>
+
+                </div>
+
+
+
+            </div>
+            <div style="margin-bottom: 20px" class="row">
+                <div class="col-sm-3">
+                    <div class="form-ground">
+
+                        <label>
+                            Năm sinh
+                            <em style="color:red">(*)</em>
+                        </label>
+                    </div>
+
+                </div>
+                <div class="col-sm-1">
+                    <div class="form-ground" style="width: 85px;">
+
+                        <select class="form-control" asp-for="Dob">
+
+                            @for (var i = 2020; i > 1899; i--)
+                            {
+                                <option>@i</option>
+                            }
+
+                        </select>
+                    </div>
+
+                </div>
+                <div class="col-sm-2">
+                    <div>
+                        <label style="margin-left: 72px;">
+                            Giới tính
+                            <em style="color:red">(*)</em>
+                        </label>
+                    </div>
+
+                </div>
+                <div class="col-sm-1">
+                    <div class="form-ground" style="width: 97px;">
+
+                        <select class="form-control" asp-for="Gender">
+                            <option value="0">-Chọn-</option>
+                            <option value="1">Nam</option>
+                            <option value="2">Nữ</option>
+                            <option value="3">Khác</option>
+
+                        </select>
+                        <span asp-validation-for="Gender" class="text-danger"></span>
+
+                    </div>
+
+                </div>
+                <div class="col-sm-2">
+                    <div>
+                        <label style="margin-left: 62px;">
+                            Quốc tịch
+                            <em style="color:red">(*)</em>
+                        </label>
+                    </div>
+
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-ground">
+
+                        <select class="form-control">
+                            <option>Việt Nam</option>
+
+                        </select>
+                    </div>
+
+                </div>
+
+
+            </div>
+            <div style="margin-bottom: 20px" class="row">
+                <div class="col-sm-5">
+                    <div>
+                        <label>
+                            Số hộ chiếu hoặc giấy thông hành hợp pháp khác
+                            <em style="color:red">(*)</em>
+                        </label>
+                    </div>
+
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-ground">
+
+                        <input class="form-control" type="tel" asp-for="PassportNumber" onkeypress='return event.charCode >= 48 && event.charCode <= 57'/>
+                        <span asp-validation-for="PassportNumber" class="text-danger"></span>
+                    </div>
+
+                </div>
+
+
+
+            </div>
+            <div style="margin-bottom: 2px;margin-right:-20px" class="row">
+
+                <div class="col-sm-3">
+                    <label>
+                        Thông tin đi lại
+                        <em style="color:red">(*)</em>
+                    </label>
+                </div>
+
+
+                <div class="col-sm-1">
+                    <div class="form-ground">
+                        <label class="form-check-label" for="check1" style="margin-left: -148px;">
+                            <input type="checkbox" class="form-check-input" id="check1" name="option1" value="something" style="margin-left: 60px;">Tàu bay
+                        </label>
+                    </div>
+
+                </div>
+                <div class="col-sm-2">
+                    <div class="form-ground">
+                        <label class="form-check-label" for="check1" style="margin-left: -165px;">
+                            <input type="checkbox" class="form-check-input" id="check1" name="option1" value="something" style="margin-left: 83px;">Tàu thuyền
+                        </label>
+                    </div>
+
+                </div>
+                <div class="col-sm-1">
+                    <div class="form-ground">
+                        <label class="form-check-label" for="check1" style="margin-left: -250px;">
+                            <input type="checkbox" class="form-check-input" id="check1" name="option1" value="something" style="margin-left: 35px;">Ô tô
+                        </label>
+                    </div>
+
+                </div>
+                <div class="col-sm-2">
+                    <div class="form-ground">
+                        <label class="form-check-label" for="check1" style="margin-left: -292px;">
+                            Khác (Ghi rõ):
+                        </label>
+                    </div>
+
+                </div>
+
+
+
+            </div>
+            <div style="margin-bottom: 20px" class="row">
+
+                <div class="col-sm-12">
+                    <div class="form-ground">
+
+                        <input class="form-control" type="text" />
+                    </div>
+                </div>
+            </div>
+            <div style="margin-bottom: 30px" class="row">
+
+                <div class="col-sm-3">
+                    <div>
+                        <label>
+                            Số hiệu phương tiện
+                            <em style="color:red">(*)</em>
+                        </label>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-ground">
+                        <input class="form-control" type="text" />
+                    </div>
+
+                </div>
+                <div class="col-sm-2">
+                    <div>
+                        <label>
+                            Số ghế
+                            <em style="color:red">(*)</em>
+                        </label>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-ground">
+                        <input class="form-control" type="text" />
+                    </div>
+
+                </div>
+
+            </div>
+            <div style="margin-bottom: 30px;" class="row">
+
+                <div class="col-sm-3">
+                    <div>
+                        <label>
+                            Ngày khởi hành
+                            <em style="color:red">(*)</em>
+                        </label>
+                    </div>
+                </div>
+                <div class="col-sm-3 form-ground" style="margin-right:-20px">
+                    <input asp-for="Departure_day" class="form-control" type="date" value="@DateTime.Now" />
+                    <span asp-validation-for="Departure_day" class="text-danger"></span>
+                </div>
+                <div class="col-sm-3">
+                    <div>
+                        <label style="margin-left: 39px;">
+                            Ngày nhập cảnh
+                            <em style="color:red">(*)</em>
+                        </label>
+                    </div>
+                </div>
+                <div class="col-sm-3 form-ground" style="margin-right:-20px">
+                    <input asp-for="Entry_date" class="form-control" type="date" value="@DateTime.Now" />
+                    <span asp-validation-for="Entry_date" class="text-danger"></span>
+                </div>
+
+
+            </div>
+
+            <div style="margin-bottom: 30px" class="row">
+
+                <div class="col-sm-3">
+                    <div>
+                        <label>
+                            Địa điểm khởi hành (tỉnh/quốc gia)Quốc gia/ Vùng lãnh thổ
+                            <em style="color:red">(*)</em>
+                        </label>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-ground">
+                        <select class="form-control">
+                            <option>Việt Nam</option>
+                        </select>
+                    </div>
+
+                </div>
+                <div class="col-sm-2">
+                    <div>
+                        <label>
+                            Tỉnh
+                            <em style="color:red">(*)</em>
+                        </label>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-ground">
+                        <select class="form-control" asp-for="Start_Place">
+                            <option value="0">-Chọn-</option>
+                            @foreach (var pro in provinces)
+                            {
+                                if (pro != null)
+                                {
+                                    <option value="@pro.ProvinceId">@pro.ProvinceName</option>
+                                }
+                            }
+
+                        </select>
+                        <span asp-validation-for="Start_Place" class="text-danger"></span>
+
+                    </div>
+
+                </div>
+
+            </div>
+            <div style="margin-bottom: 30px" class="row">
+
+                <div class="col-sm-3">
+                    <div>
+                        <label>
+                            Địa điểm nơi đến (tỉnh/quốc gia)Quốc gia/ Vùng lãnh thổ
+                            <em style="color:red">(*)</em>
+                        </label>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-ground">
+                        <select class="form-control">
+                            <option>Việt Nam</option>
+
+                        </select>
+                    </div>
+
+                </div>
+                <div class="col-sm-2">
+                    <div>
+                        <label>
+                            Tỉnh
+                            <em style="color:red">(*)</em>
+                        </label>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-ground">
+                        <select class="form-control" asp-for="Destination">
+                            <option value="0">-Chọn-</option>
+                            @foreach (var pro in provinces)
+                            {
+                                if (pro != null)
+                                {
+                                    <option value="@pro.ProvinceId">@pro.ProvinceName</option>
+                                }
+                            }
+
+                        </select>
+                        <span asp-validation-for="Destination" class="text-danger"></span>
+                    </div>
+
+                </div>
+
+            </div>
+            <div style="margin-bottom: 2px" class="row">
+
+                <div class="col-sm-12">
+                    <div>
+                        <b>
+                            Trong vòng 21 ngày qua, Anh/Chị có đến quốc gia/vùng lãnh thổ nào?
+                            <em style="color:red">(*)</em>
+                        </b>
+                    </div>
+                </div>
+
+
+            </div>
+            <div style="margin-bottom: 20px" class="row">
+
+                <div class="col-sm-12">
+                    <div class="form-ground">
+                        <input class="form-control" type="text" asp-for="Description" />
+                        <span asp-validation-for="Description" class="text-danger"></span>
+
+                    </div>
+                </div>
+            </div>
+            <div style="margin-bottom: 30px" class="row">
+
+                <div class="col-sm-12">
+                    <div style="font-family:Helvetica Neue,Helvetica,Arial,sans-serif;color:black">
+                        <b style="color:black">Địa chỉ liên lạc tại Việt Nam</b>
+                    </div>
+                </div>
+
+
+            </div>
+            <div style="margin-bottom: 20px" class="row">
+                <div class="col-sm-4">
+                    <div class="form-ground">
+
+                        <label>
+                            Tỉnh thành
+                            <em style="color:red">(*)</em>
+                        </label>
+                        <select class="form-control" onchange="home.drawdistrictsbyprovinId()" asp-for="ProvinceId">
+                            <option value="0">-Chọn-</option>
+                            @foreach (var pro in provinces)
+                            {
+                                if (pro != null)
+                                {
+                                    <option value="@pro.ProvinceId">@pro.ProvinceName</option>
+                                }
+                            }
+                        </select>
+                        <span asp-validation-for="ProvinceId" class="text-danger"></span>
+
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-ground">
+
+                        <label>
+                            Quận / huyện
+                            <em style="color:red">(*)</em>
+                        </label>
+                        <select class="form-control" onchange="home.drawwardbyDistrictId()" asp-for="DistrictId">
+                            <option value="0">-Chọn-</option>
+                        </select>
+                        <span asp-validation-for="DistrictId" class="text-danger"></span>
+
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-ground">
+                        <label>
+                            Phường / xã
+                            <em style="color:red">(*)</em>
+                        </label>
+                        <select class="form-control" asp-for="WardId">
+                            <option value="0">-Chọn-</option>
+                        </select>
+                        <span asp-validation-for="WardId" class="text-danger"></span>
+
+                    </div>
+                </div>
+            </div>
+            <div style="margin-bottom: 2px" class="row">
+
+                <div class="col-sm-12">
+                    <div>
+                        <label>
+                            Địa chỉ nơi ở tại Việt Nam
+                            <em style="color:red">(*)</em>
+                        </label>
+                    </div>
+                </div>
+
+
+            </div>
+            <div style="margin-bottom: 20px" class="row">
+
+                <div class="col-sm-12">
+                    <div class="form-ground">
+                        <input class="form-control" type="text" asp-for="Address" />
+                        <span asp-validation-for="Address" class="text-danger"></span>
+
+                    </div>
+                </div>
+            </div>
+            <div style="margin-bottom: 20px" class="row">
+
+                <div class="col-sm-12">
+                    <div style="font-style:italic">
+                        <i>Số điện thoại bạn sẽ sử dụng tại Việt Nam (Là số Roaming hoặc số Việt Nam)</i>
+                    </div>
+                </div>
+
+
+            </div>
+            <div style="margin-bottom: 20px" class="row">
+                <div class="col-sm-6">
+                    <div class="form-ground">
+
+                        <label>
+                            Điện thoại
+                            <em style="color:red">(*)</em>
+                        </label>
+                        <input asp-for="Phone" class="form-control" type="tel" onkeypress='return event.charCode >= 48 && event.charCode <= 57' />
+                        <span asp-validation-for="Phone" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-ground">
+
+                        <label>
+                            Email
+                        </label>
+                        <input class="form-control" type="text" asp-for="Email" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                </div>
+
+            </div>
+            <div style="margin-bottom: 2px" class="row">
+
+                <div class="col-sm-12">
+                    <div>
+                        <b style="color:black">
+                            Trong vòng 21 ngày (tính đến thời điểm làm thủ tục xuất cảnh, nhập cảnh, quá cảnh) Anh/Chị có thấy xuất hiện dấu hiệu nào sau đây không?
+                            <em style="color:red">(*)</em>
+                        </b>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="tableChoiceData row">
+                <div class="cols-left col-sm-6" style="margin-left:37px">
+                    <table class="table table-bordered" style="width:500px">
+                        <thead>
+                            <tr>
+                                <th>Triệu chứng </th>
+                                <th width="70">Có</th>
+                                <th width="70">Không</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div class="form-group form-check">
+                                        <label class="form-check-label">
+                                            Sốt <em style="color:red">(*)</em>
+
+                                        </label>
+                                    </div>
+                                </td>
+                                <td>
+                                    <input type="radio" asp-for="Sot" value="true" />
+                                </td>
+                                <td>
+                                    <input type="radio" asp-for="Sot" value="false" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="form-group form-check">
+                                        <label class="form-check-label">
+                                            Ho <em style="color:red">(*)</em>
+                                        </label>
+                                    </div>
+                                </td>
+                                <td>
+                                    <input type="radio" value="true" asp-for="Cough" />
+                                </td>
+                                <td>
+                                    <input type="radio" value="false" asp-for="Cough" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="form-group form-check">
+                                        <label class="form-check-label">
+                                            Khó thở <em style="color:red">(*)</em>
+                                        </label>
+                                    </div>
+                                </td>
+                                <td>
+                                    <input type="radio" value="true" asp-for="Sob" />
+                                </td>
+                                <td>
+                                    <input type="radio" value="false" asp-for="Sob" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="form-group form-check">
+                                        <label class="form-check-label">
+                                            Đau họng <em style="color:red">(*)</em>
+                                        </label>
+                                    </div>
+                                </td>
+                                <td>
+                                    <input type="radio" value="true" asp-for="Sorethroat" />
+                                </td>
+                                <td>
+                                    <input type="radio" value="false" asp-for="Sorethroat" />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="cols-left col-sm-6" style="margin-left:-55px">
+                    <table class="table table-bordered" style="width:500px">
+                        <thead>
+                            <tr>
+                                <th>Triệu chứng </th>
+                                <th width="70">Có</th>
+                                <th width="70">Không</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div class="form-group form-check">
+                                        <label class="form-check-label">
+                                            Nôn/buồn nôn <em style="color:red">(*)</em>
+
+                                        </label>
+                                    </div>
+                                </td>
+                                <td>
+                                    <input type="radio" value="true" asp-for="Nausea" />
+                                </td>
+                                <td>
+                                    <input type="radio" value="false" asp-for="Nausea" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="form-group form-check">
+                                        <label class="form-check-label">
+                                            Tiêu chảy <em style="color:red">(*)</em>
+                                        </label>
+                                    </div>
+                                </td>
+                                <td>
+                                    <input type="radio" value="true" asp-for="Diarhea" />
+                                </td>
+                                <td>
+                                    <input type="radio" value="false" asp-for="Diarhea" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="form-group form-check">
+                                        <label class="form-check-label">
+                                            Xuất huyết ngoài da  <em style="color:red">(*)</em>
+                                        </label>
+                                    </div>
+                                </td>
+                                <td>
+                                    <input type="radio" value="true" asp-for="Bots" />
+                                </td>
+                                <td>
+                                    <input type="radio" value="false" asp-for="Bots" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="form-group form-check">
+                                        <label class="form-check-label">
+                                            Nổi ban ngoài da <em style="color:red">(*)</em>
+                                        </label>
+                                    </div>
+                                </td>
+                                <td>
+                                    <input type="radio" value="true" asp-for="Skinrash" />
+                                </td>
+                                <td>
+                                    <input type="radio" value="false" asp-for="Skinrash" />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <span asp-validation-for="Sot" class="text-danger"></span>
+            <span asp-validation-for="Cough" class="text-danger"></span>
+            <span asp-validation-for="Sob" class="text-danger"></span>
+            <span asp-validation-for="Sorethroat" class="text-danger"></span>
+            <span asp-validation-for="Nausea" class="text-danger"></span>
+            <span asp-validation-for="Diarhea" class="text-danger"></span>
+            <span asp-validation-for="Bots" class="text-danger"></span>
+            <span asp-validation-for="Skinrash" class="text-danger"></span>
+            <div style="margin-bottom: 2px" class="row">
+
+                <div class="col-sm-12">
+                    <div>
+                        <label>Danh sách vắc-xin hoặc sinh phẩm được sử dụng</label>
+                    </div>
+                </div>
+
+
+            </div>
+            <div style="margin-bottom: 20px" class="row">
+
+                <div class="col-sm-12">
+                    <div class="form-ground">
+                        <input class="form-control" type="text"  asp-for="Vacxin"/>
+                    </div>
+                </div>
+            </div>
+            <div style="margin-bottom: 2px" class="row">
+
+                <div class="col-sm-12">
+                    <div>
+                        <b style="color:black">Lịch sử phơi nhiễm: Trong vòng 21 ngày qua, Anh/Chị có <em style="color:red">(*)</em></b>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="tableChoiceData row ">
+                <div class="col-sm-12">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th width="70">Có</th>
+                                <th width="70">Không</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                          
+                            <tr>
+                                <td>
+                                    <div class="form-group form-check">
+                                        <label class="form-check-label">
+                                            Có	Không
+                                            Đến trang trại chăn nuôi / chợ buôn bán động vật sống / cơ sở giết mổ động vật / tiếp xúc động vật
+                                            <em style="color:red">(*)</em>
+                                        </label>
+                                    </div>
+                                </td>
+                                <td>
+                                    <input type="radio" asp-for="Contact_Oj" value="true" />
+                                </td>
+                                <td>
+                                    <input type="radio" asp-for="Contact_Oj" value="false" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="form-group form-check">
+                                        <label class="form-check-label">
+
+                                            Tiếp xúc gần dưới 2m với người mắc bệnh viêm đường hô hấp do nCoV
+                                            <em style="color:red">(*)</em>
+                                        </label>
+                                    </div>
+                                </td>
+                                <td>
+                                    <input type="radio" asp-for="Contact_Pp" value="true" />
+                                </td>
+                                <td>
+                                    <input type="radio" asp-for="Contact_Pp" value="false" />
+                                </td>
+                            </tr>
+                           
+                        </tbody>
+                    </table>
+                </div>
+                <span asp-validation-for="Contact_Oj" class="text-danger"></span>
+                <span asp-validation-for="Contact_Pp" class="text-danger"></span>
+                <label style="color:red;margin-bottom: 30px">
+                    Dữ liệu bạn cung cấp hoàn toàn bảo mật và chỉ phục vụ cho việc phòng chống dịch, thuộc quản lý của Ban chỉ đạo quốc gia về Phòng chống dịch Covid-19. Khi bạn nhấn nút "Gửi" là bạn đã hiểu và đồng ý.
+                </label>
+                <div style="text-align:center">
+                    <button style="border-radius:30px;margin-bottom: 30px;margin-left:444px" type="submit" class="btn btn-success">GỬI TỜ KHAI</button>
+                </div>
+            </div>
+
+</form>
+    
+
+
+@section Scripts{
+
+<script src="~/js/home.js" asp-append-version="true"></script>
+
+}
+ 
